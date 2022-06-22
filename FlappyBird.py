@@ -226,14 +226,24 @@ def main(genomas, config): # fitness function
         
         indice_cano = 0
         if len(passaros) > 0:
-            pass # descobrir qual cano olhar
+            if len(canos) > 1 and passaros[0].x > (canos[0].x + canos[0].CANO_TOPO.get_width()):
+                indice_cano = 1
         else:
             rodando = False
             break
             
         # mover as coisas
-        for passaro in passaros:
+        for i ,passaro in enumerate(passaros):
             passaro.mover()
+            # aumentar um pouco a fitness do passaro
+            lista_genomas[i].fitness += 0.1
+            output = redes[i].activate((passaro.y,
+                                        abs(passaro.y - canos[indice_cano].altura),
+                                        abs(passaro.y - canos[indice_cano].pos_base)))
+            # -1 e 1 -> se o output for > 0.5 então o passaro pula
+            if output[0] > 0.5:
+                passaro.pular()
+            
         chao.mover()
         
         adicionar_cano = False
