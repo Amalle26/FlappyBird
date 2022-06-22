@@ -224,6 +224,13 @@ def main(genomas, config): # fitness function
                         for passaro in passaros:
                             passaro.pular()
         
+        indice_cano = 0
+        if len(passaros) > 0:
+            pass # descobrir qual cano olhar
+        else:
+            rodando = False
+            break
+            
         # mover as coisas
         for passaro in passaros:
             passaro.mover()
